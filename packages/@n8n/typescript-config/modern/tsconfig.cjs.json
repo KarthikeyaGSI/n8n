@@ -3,7 +3,7 @@
 		"ignoreDeprecations": "6.0",
 		"composite": true,
 		"module": "umd",
-		"moduleResolution": "node",
+		"moduleResolution": "node16",
 		"verbatimModuleSyntax": false,
 		"resolveJsonModule": false,
 		"tsBuildInfoFile": "${configDir}/dist/cjs/build.tsbuildinfo"
