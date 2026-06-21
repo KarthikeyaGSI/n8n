@@ -12,6 +12,9 @@ COPY patches/ patches/
 COPY packages/ packages/
 COPY scripts/ scripts/
 
+# Skip lefthook install in prepare script (requires git, not available in slim image)
+ENV CI=true
+
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
