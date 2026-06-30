@@ -1,0 +1,40 @@
+# Reference Cloudflare configuration for the Cloudflare-native n8n topology.
+# This is not a Workers runtime config for the n8n API. The n8n API must run in
+# Cloudflare Containers or another Node-capable host. Use this file only as a
+# reference for Cloudflare resource names, optional Pages/edge configuration, and
+# secret setup notes.
+
+name = "n8n-cloudflare-reference"
+compatibility_date = "2026-06-30"
+
+[vars]
+N8N_HOST = "n8n.example.com"
+N8N_PROTOCOL = "https"
+N8N_PORT = "5678"
+WEBHOOK_URL = "https://n8n.example.com/"
+DB_TYPE = "postgresdb"
+DB_POSTGRESDB_SSL_ENABLED = "true"
+
+[[r2_buckets]]
+# Reference only: the n8n API should use its supported object-storage
+# configuration from the Node runtime, not a Workers R2 binding.
+binding = "N8N_BINARY_DATA_BUCKET"
+bucket_name = "n8n-binary-data"
+
+[[kv_namespaces]]
+# Optional edge/deployment metadata only. Do not use KV as a replacement for
+# n8n execution state, queue state, process memory, or relational database data.
+binding = "N8N_DEPLOYMENT_KV"
+id = "replace-with-kv-namespace-id"
+
+# n8n currently requires Node >=22.22. Configure that in the container image,
+# Pages build settings, or external Node host; this file does not enforce it.
+
+# Store secrets with the selected runtime's secret manager, for example:
+# wrangler secret put N8N_ENCRYPTION_KEY
+# wrangler secret put DB_POSTGRESDB_PASSWORD
+# wrangler secret put DB_POSTGRESDB_USER
+# wrangler secret put DB_POSTGRESDB_DATABASE
+# wrangler secret put DB_POSTGRESDB_HOST
+# wrangler secret put R2_ACCESS_KEY_ID
+# wrangler secret put R2_SECRET_ACCESS_KEY
