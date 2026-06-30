@@ -227,6 +227,28 @@ Use SQLite for local development unless you need to reproduce PostgreSQL-specifi
 behavior. Use PostgreSQL locally or through Neon when validating production-like
 connection behavior.
 
+## Cloudflare build image settings
+
+Cloudflare Pages build image v3 currently defaults to Node.js `22.16.0`, which
+is below n8n's root engine requirement of Node `>=22.22`. Cloudflare also does
+not detect Node.js or package manager versions from `package.json` `engines`, so
+a Cloudflare build can fail during dependency installation unless the version is
+pinned explicitly.
+
+This repository includes `.node-version` with `22.22.3` so Cloudflare Pages and
+other version managers can select a compatible Node version. If your Cloudflare
+project ignores repository version files, set these build environment variables
+in the Cloudflare dashboard instead:
+
+```bash
+NODE_VERSION=22.22.3
+PNPM_VERSION=10.32.1
+```
+
+These settings only affect the build environment. They do not make the n8n API
+compatible with Cloudflare Workers; the API still needs Cloudflare Containers or
+another Node-capable host.
+
 ## Validation checklist before deploying
 
 1. Confirm the branch builds with Node `>=22.22` and pnpm `>=10.22.0`.

@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+command -v node >/dev/null 2>&1 || {
+	echo "Node.js is required to validate the n8n Cloudflare deployment build." >&2
+	exit 1
+}
+
 command -v pnpm >/dev/null 2>&1 || {
 	echo "pnpm is required to validate the n8n Cloudflare deployment build." >&2
 	exit 1
 }
+
+node -e '
+const [major, minor] = process.versions.node.split(".").map(Number);
+if (major < 22 || (major === 22 && minor < 22)) {
+	console.error(`Node.js >=22.22 is required. Current version: ${process.version}`);
+	process.exit(1);
+}
+'
 
 pnpm install --frozen-lockfile
 pnpm build
