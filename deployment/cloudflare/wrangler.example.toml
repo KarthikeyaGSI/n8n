@@ -1,0 +1,32 @@
+# Example Cloudflare configuration for the Cloudflare-native n8n topology.
+# This file is a template: copy it to wrangler.toml and fill in account-specific
+# values outside version control.
+
+name = "n8n-cloudflare"
+compatibility_date = "2026-06-30"
+
+[vars]
+NODE_VERSION = "22.22"
+N8N_HOST = "n8n.example.com"
+N8N_PROTOCOL = "https"
+N8N_PORT = "5678"
+WEBHOOK_URL = "https://n8n.example.com/"
+DB_TYPE = "postgresdb"
+DB_POSTGRESDB_SSL_ENABLED = "true"
+
+[[r2_buckets]]
+binding = "N8N_BINARY_DATA_BUCKET"
+bucket_name = "n8n-binary-data"
+
+[[kv_namespaces]]
+binding = "N8N_DEPLOYMENT_KV"
+id = "replace-with-kv-namespace-id"
+
+# Store secrets with commands such as:
+# wrangler secret put N8N_ENCRYPTION_KEY
+# wrangler secret put DB_POSTGRESDB_PASSWORD
+# wrangler secret put DB_POSTGRESDB_USER
+# wrangler secret put DB_POSTGRESDB_DATABASE
+# wrangler secret put DB_POSTGRESDB_HOST
+# wrangler secret put R2_ACCESS_KEY_ID
+# wrangler secret put R2_SECRET_ACCESS_KEY
